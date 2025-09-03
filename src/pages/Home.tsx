@@ -1,10 +1,16 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import {Star, Play, Clock, Sparkles} from 'lucide-react'
+import { Star, Play, Clock, Sparkles, Lock } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
+import AuthModal from '../components/AuthModal'
 
 const Home: React.FC = () => {
+  const { user } = useAuth();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalView, setAuthModalView] = useState<'login' | 'register'>('login');
+  
   const quickActions = [
     {
       title: '晚安音乐',
@@ -103,6 +109,49 @@ const Home: React.FC = () => {
           </p>
         </div>
       </motion.div>
+
+      {/* 访客提示 */}
+      {user?.isAnonymous && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mx-6 mb-6 p-4 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-400/30 rounded-2xl backdrop-blur-sm"
+        >
+          <div className="flex items-center space-x-3">
+            <div className="p-2 bg-amber-400/20 rounded-xl">
+              <Lock className="w-5 h-5 text-amber-300" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-amber-200 font-medium text-sm mb-1">
+                解锁完整魔法体验
+              </h3>
+              <p className="text-amber-300/80 text-xs">
+                登录后可享受个性化推荐、收藏功能和云端同步
+              </p>
+              <div className="flex space-x-2 mt-2">
+                <button
+                  onClick={() => {
+                    setAuthModalView('login');
+                    setIsAuthModalOpen(true);
+                  }}
+                  className="px-3 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 rounded-lg text-xs transition-all duration-200"
+                >
+                  登录
+                </button>
+                <button
+                  onClick={() => {
+                    setAuthModalView('register');
+                    setIsAuthModalOpen(true);
+                  }}
+                  className="px-3 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 rounded-lg text-xs transition-all duration-200"
+                >
+                  注册
+                </button>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       {/* 快速操作 - IP形象集成 */}
       <div className="px-6 mb-8">
@@ -206,6 +255,13 @@ const Home: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* 认证模态框 */}
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)}
+        initialView={authModalView}
+      />
     </div>
   )
 }

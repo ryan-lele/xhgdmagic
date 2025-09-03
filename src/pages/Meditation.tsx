@@ -1,10 +1,12 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import {Sparkles, Palette, Camera, Wand2, Star, ArrowRight} from 'lucide-react'
+import {Sparkles, Palette, Camera, Wand2, Star, ArrowRight, BookOpen} from 'lucide-react'
+import StorybookCreator from '../components/StorybookCreator'
 
 const MagicMoments: React.FC = () => {
   const [selectedFeature, setSelectedFeature] = useState<any>(null)
+  const [showStorybookCreator, setShowStorybookCreator] = useState(false)
 
   const magicFeatures = [
     {
@@ -16,7 +18,7 @@ const MagicMoments: React.FC = () => {
       decorIcon: Sparkles,
       color: 'from-amber-300 via-amber-400 to-orange-400',
       bgPattern: 'bg-gradient-to-br from-amber-50/10 to-orange-100/5',
-      status: '即将开放',
+      status: '立即体验',
       features: [
         '个性化故事生成',
         '互动式情节选择', 
@@ -173,11 +175,17 @@ const MagicMoments: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => setSelectedFeature(feature)}
+                onClick={() => {
+                  if (feature.id === 1) {
+                    setShowStorybookCreator(true)
+                  } else {
+                    setSelectedFeature(feature)
+                  }
+                }}
                 className="w-full mt-6 bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 text-white border border-white/20 rounded-2xl py-4 px-6 font-medium transition-all duration-300 flex items-center justify-center space-x-2"
               >
-                <span>了解更多</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>{feature.id === 1 ? '开始创作' : '了解更多'}</span>
+                {feature.id === 1 ? <BookOpen className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
               </motion.button>
             </div>
           </motion.div>
@@ -234,6 +242,16 @@ const MagicMoments: React.FC = () => {
             </div>
           </motion.div>
         </motion.div>
+      )}
+
+      {/* 绘本创作器 */}
+      {showStorybookCreator && (
+        <StorybookCreator 
+          onClose={() => setShowStorybookCreator(false)}
+          onStorybookCreated={() => {
+            setShowStorybookCreator(false)
+          }}
+        />
       )}
     </div>
   )

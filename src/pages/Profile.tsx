@@ -1,14 +1,20 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import {Crown, Moon, Clock, Star, Settings, Heart, Award, TrendingUp, Sparkles} from 'lucide-react'
+import { Crown, Moon, Clock, Star, Settings, Heart, Award, TrendingUp, Sparkles, User, LogIn, BookOpen, Play } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
+import AuthModal from '../components/AuthModal'
 
 const Profile: React.FC = () => {
+  const { user, userData } = useAuth();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalView, setAuthModalView] = useState<'login' | 'register'>('login');
+  
   const stats = [
     { label: '魔法连击天数', value: '12', icon: TrendingUp, color: 'text-emerald-400', gradient: 'from-emerald-400 to-teal-400' },
     { label: '甜梦时光', value: '48小时', icon: Moon, color: 'text-indigo-400', gradient: 'from-indigo-400 to-blue-400' },
     { label: '魔法体验', value: '23', icon: Sparkles, color: 'text-amber-400', gradient: 'from-amber-400 to-yellow-400' },
-    { label: '收藏故事', value: '8', icon: Heart, color: 'text-pink-400', gradient: 'from-pink-400 to-rose-400' }
+    { label: '收藏故事', value: userData.favoriteStories?.length?.toString() || '0', icon: Heart, color: 'text-pink-400', gradient: 'from-pink-400 to-rose-400' }
   ]
 
   const achievements = [
@@ -81,18 +87,128 @@ const Profile: React.FC = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-amber-300 via-lavender-400 to-emerald-300 rounded-full blur-lg opacity-60"></div>
             <div className="relative w-full h-full bg-gradient-to-br from-white/20 to-transparent rounded-full flex items-center justify-center border-2 border-white/30">
-              <Crown className="w-12 h-12 text-amber-200" />
+              {user?.isAnonymous ? (
+                <User className="w-12 h-12 text-amber-200" />
+              ) : (
+                <Crown className="w-12 h-12 text-amber-200" />
+              )}
             </div>
           </motion.div>
           
           <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-lavender-200 to-emerald-200 mb-2">
-            小小梦想家
+            {user?.isAnonymous ? '访客用户' : '小小梦想家'}
           </h1>
           <p className="text-lavender-200/80 leading-relaxed">
-            愿每个夜晚都有魔法相伴 ✨
+            {user?.isAnonymous 
+              ? '登录后解锁完整的个人中心体验 ✨' 
+              : '愿每个夜晚都有魔法相伴 ✨'
+            }
           </p>
         </div>
       </motion.div>
+
+      {/* 访客用户登录提示 */}
+      {user?.isAnonymous && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mx-6 mb-6 p-6 bg-gradient-to-r from-lavender-500/20 to-indigo-500/20 border border-lavender-400/30 rounded-2xl backdrop-blur-sm"
+        >
+          <div className="text-center">
+            <div className="w-16 h-16 mx-auto mb-4 bg-lavender-400/20 rounded-full flex items-center justify-center">
+              <LogIn className="w-8 h-8 text-lavender-300" />
+            </div>
+            <h3 className="text-lavender-200 font-bold text-lg mb-2">
+              登录解锁完整功能
+            </h3>
+            <p className="text-lavender-300/80 text-sm mb-4 leading-relaxed">
+              登录后可查看个人统计数据、解锁成就徽章、享受个性化设置和云端同步功能
+            </p>
+            <div className="flex space-x-3">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  setAuthModalView('login');
+                  setIsAuthModalOpen(true);
+                }}
+                className="px-6 py-3 bg-gradient-to-r from-lavender-500 to-lavender-600 hover:from-lavender-600 hover:to-lavender-700 text-white rounded-xl font-medium transition-all duration-200"
+              >
+                立即登录
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  setAuthModalView('register');
+                  setIsAuthModalOpen(true);
+                }}
+                className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white rounded-xl font-medium transition-all duration-200"
+              >
+                注册账户
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      {/* 收藏故事展示 */}
+      {user && !user.isAnonymous && userData.favoriteStories && userData.favoriteStories.length > 0 && (
+        <div className="px-6 mb-8">
+          <h2 className="text-lg font-bold text-white mb-4 flex items-center">
+            <Heart className="w-5 h-5 mr-2 text-pink-400" />
+            我的收藏故事
+          </h2>
+          <div className="space-y-3">
+            {userData.favoriteStories.map((story, index) => (
+              <motion.div
+                key={story.id}
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ scale: 1.02 }}
+                className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10 relative overflow-hidden"
+              >
+                <div className="flex items-center space-x-4">
+                  <div className="relative">
+                    <img
+                      src={story.image}
+                      alt={story.name}
+                      className="w-16 h-16 rounded-xl object-cover shadow-lg"
+                    />
+                    <div className="absolute inset-0 bg-black/30 rounded-xl flex items-center justify-center">
+                      <Play className="w-4 h-4 text-white" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1">
+                    <h3 className="text-white font-bold text-sm mb-1">
+                      {story.name}
+                    </h3>
+                    <p className="text-lavender-200/70 text-xs mb-2 leading-relaxed">
+                      {story.description}
+                    </p>
+                    <div className="flex items-center space-x-3 text-lavender-200/60 text-xs">
+                      <div className="flex items-center space-x-1">
+                        <Clock className="w-3 h-3" />
+                        <span>{story.duration}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <BookOpen className="w-3 h-3" />
+                        <span>{story.category}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="text-pink-400">
+                    <Heart className="w-5 h-5 fill-current" />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* 魔法统计 */}
       <div className="px-6 mb-8">
@@ -244,6 +360,13 @@ const Profile: React.FC = () => {
           })}
         </div>
       </div>
+
+      {/* 认证模态框 */}
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)}
+        initialView={authModalView}
+      />
     </div>
   )
 }

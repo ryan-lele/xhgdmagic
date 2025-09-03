@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试音频生成器</title>
+</head>
+<body>
+    <h1>测试音频生成器</h1>
+    <p>这个页面可以帮助您生成简单的测试音频文件。</p>
+    
+    <div>
+        <h2>生成测试音频</h2>
+        <button onclick="generateTone('rain', 440, 300)">生成雨声测试</button>
+        <button onclick="generateTone('ocean', 220, 420)">生成海浪测试</button>
+        <button onclick="generateTone('birds', 880, 360)">生成鸟鸣测试</button>
+        <button onclick="generateTone('bell', 660, 180)">生成钟声测试</button>
+        <button onclick="generateTone('meditation', 330, 600)">生成冥想测试</button>
+    </div>
+    
+    <div>
+        <h2>下载说明</h2>
+        <p>1. 点击上面的按钮生成测试音频</p>
+        <p>2. 右键点击播放器，选择"另存为"</p>
+        <p>3. 将文件保存到 public/audio/ 目录</p>
+        <p>4. 重命名为对应的文件名（如 rain.mp3）</p>
+    </div>
+    
+    <audio id="audioPlayer" controls style="width: 100%; margin-top: 20px;"></audio>
+    
+    <script>
+        function generateTone(name, frequency, duration) {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration / 1000);
+            
+            // 创建下载链接
+            const audioData = generateAudioData(frequency, duration);
+            const blob = new Blob([audioData], { type: 'audio/wav' });
+            const url = URL.createObjectURL(blob);
+            
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = url;
+            audioPlayer.load();
+            
+            console.log(`生成了 ${name} 测试音频，频率: ${frequency}Hz，时长: ${duration}ms`);
+        }
+        
+        function generateAudioData(frequency, duration) {
+            const sampleRate = 44100;
+            const samples = Math.floor(sampleRate * duration / 1000);
+            const buffer = new ArrayBuffer(44 + samples * 2);
+            const view = new DataView(buffer);
+            
+            // WAV文件头
+            const writeString = (offset, string) => {
+                for (let i = 0; i < string.length; i++) {
+                    view.setUint8(offset + i, string.charCodeAt(i));
+                }
+            };
+            
+            writeString(0, 'RIFF');
+            view.setUint32(4, 36 + samples * 2, true);
+            writeString(8, 'WAVE');
+            writeString(12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, 1, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true);
+            writeString(36, 'data');
+            view.setUint32(40, samples * 2, true);
+            
+            // 生成音频数据
+            for (let i = 0; i < samples; i++) {
+                const sample = Math.sin(2 * Math.PI * frequency * i / sampleRate) * 0.1;
+                view.setInt16(44 + i * 2, sample * 32767, true);
+            }
+            
+            return buffer;
+        }
+    </script>
+</body>
+</html>
+
+
