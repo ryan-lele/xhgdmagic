@@ -1,12 +1,14 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import { Crown, Moon, Clock, Star, Settings, Heart, Award, TrendingUp, Sparkles, User, LogIn, BookOpen, Play } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import AuthModal from '../components/AuthModal'
 
 const Profile: React.FC = () => {
   const { user, userData } = useAuth();
+  const navigate = useNavigate();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalView, setAuthModalView] = useState<'login' | 'register'>('login');
   
@@ -63,6 +65,16 @@ const Profile: React.FC = () => {
       case '稀有': return 'from-blue-400 to-indigo-400'
       default: return 'from-gray-400 to-gray-500'
     }
+  }
+
+  // 跳转到故事页面
+  const handleStoryClick = (story: any) => {
+    navigate('/stories', { 
+      state: { 
+        scrollToStory: story.id,
+        highlightStory: story.id 
+      } 
+    });
   }
 
   return (
@@ -167,7 +179,9 @@ const Profile: React.FC = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ scale: 1.02 }}
-                className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10 relative overflow-hidden"
+                whileTap={{ scale: 0.98 }}
+                onClick={() => handleStoryClick(story)}
+                className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10 relative overflow-hidden cursor-pointer hover:from-white/15 hover:to-white/8 transition-all duration-300"
               >
                 <div className="flex items-center space-x-4">
                   <div className="relative">

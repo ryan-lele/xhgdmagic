@@ -1,12 +1,14 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import {Sparkles, Palette, Camera, Wand2, Star, ArrowRight, BookOpen} from 'lucide-react'
+import {Sparkles, Palette, Camera, Wand2, Star, ArrowRight, BookOpen, MessageCircle} from 'lucide-react'
 import StorybookCreator from '../components/StorybookCreator'
+import CozeChatTest from '../components/CozeChatTest'
 
 const MagicMoments: React.FC = () => {
   const [selectedFeature, setSelectedFeature] = useState<any>(null)
   const [showStorybookCreator, setShowStorybookCreator] = useState(false)
+  const [showCozeChatTest, setShowCozeChatTest] = useState(false)
 
   const magicFeatures = [
     {
@@ -23,7 +25,8 @@ const MagicMoments: React.FC = () => {
         '个性化故事生成',
         '互动式情节选择', 
         '专属插画创作',
-        '语音朗读功能'
+        '语音朗读功能',
+        'Coze AI测试功能'
       ]
     },
     {
@@ -172,21 +175,41 @@ const MagicMoments: React.FC = () => {
                 ))}
               </div>
               
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                  if (feature.id === 1) {
-                    setShowStorybookCreator(true)
-                  } else {
-                    setSelectedFeature(feature)
-                  }
-                }}
-                className="w-full mt-6 bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 text-white border border-white/20 rounded-2xl py-4 px-6 font-medium transition-all duration-300 flex items-center justify-center space-x-2"
-              >
-                <span>{feature.id === 1 ? '开始创作' : '了解更多'}</span>
-                {feature.id === 1 ? <BookOpen className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-              </motion.button>
+              <div className="mt-6 space-y-3">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    if (feature.id === 1) {
+                      setShowStorybookCreator(true)
+                    } else {
+                      setSelectedFeature(feature)
+                    }
+                  }}
+                  className="w-full bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 text-white border border-white/20 rounded-2xl py-4 px-6 font-medium transition-all duration-300 flex items-center justify-center space-x-2"
+                >
+                  <span>{feature.id === 1 ? '开始创作' : '了解更多'}</span>
+                  {feature.id === 1 ? <BookOpen className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+                </motion.button>
+                
+                {feature.id === 1 && (
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => {
+                      // 滚动到页面底部的绘本故事制作测试区域
+                      const element = document.getElementById('storybook-creator-section');
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                    className="w-full bg-gradient-to-r from-lavender-500/20 to-lavender-600/20 hover:from-lavender-500/30 hover:to-lavender-600/30 text-lavender-200 border border-lavender-400/30 rounded-2xl py-3 px-6 font-medium transition-all duration-300 flex items-center justify-center space-x-2"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    <span>AI测试功能</span>
+                  </motion.button>
+                )}
+              </div>
             </div>
           </motion.div>
         ))}
@@ -246,11 +269,20 @@ const MagicMoments: React.FC = () => {
 
       {/* 绘本创作器 */}
       {showStorybookCreator && (
-        <StorybookCreator 
-          onClose={() => setShowStorybookCreator(false)}
-          onStorybookCreated={() => {
-            setShowStorybookCreator(false)
-          }}
+        <div id="storybook-creator-section">
+          <StorybookCreator 
+            onClose={() => setShowStorybookCreator(false)}
+            onStorybookCreated={() => {
+              setShowStorybookCreator(false)
+            }}
+          />
+        </div>
+      )}
+
+      {/* Coze Chat 测试功能 */}
+      {showCozeChatTest && (
+        <CozeChatTest 
+          onClose={() => setShowCozeChatTest(false)}
         />
       )}
     </div>

@@ -1,13 +1,14 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Star, Play, Clock, Sparkles, Lock } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import AuthModal from '../components/AuthModal'
 
 const Home: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalView, setAuthModalView] = useState<'login' | 'register'>('login');
   
@@ -40,25 +41,42 @@ const Home: React.FC = () => {
 
   const recommendations = [
     {
-      title: '雨夜安眠曲',
+      title: '森林雨声',
       duration: '45分钟',
       image: 'https://images.pexels.com/photos/1529360/pexels-photo-1529360.jpeg?auto=compress&cs=tinysrgb&w=400',
       category: '自然声音',
-      gradient: 'from-blue-400/20 to-cyan-400/10'
+      gradient: 'from-blue-400/20 to-cyan-400/10',
+      onClick: () => navigate('/sleep')
     },
     {
       title: 'AI魔法绘本预览',
       duration: '即将开放',
       image: 'https://images.pexels.com/photos/3560044/pexels-photo-3560044.jpeg?auto=compress&cs=tinysrgb&w=400',
       category: '魔法体验',
-      gradient: 'from-purple-400/20 to-pink-400/10'
+      gradient: 'from-purple-400/20 to-pink-400/10',
+      onClick: () => {
+        navigate('/meditation');
+        // 延迟滚动到AI测试功能区域
+        setTimeout(() => {
+          const element = document.getElementById('storybook-creator-section');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 500);
+      }
     },
     {
-      title: '星空下的故事',
-      duration: '15分钟',
+      title: '过家家',
+      duration: '8分钟',
       image: 'https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg?auto=compress&cs=tinysrgb&w=400',
       category: '睡前故事',
-      gradient: 'from-amber-400/20 to-orange-400/10'
+      gradient: 'from-amber-400/20 to-orange-400/10',
+      onClick: () => navigate('/stories', { 
+        state: { 
+          scrollToStory: 'story-1-1-1',
+          highlightStory: 'story-1-1-1' 
+        } 
+      })
     }
   ]
 
@@ -220,7 +238,9 @@ const Home: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.1 }}
               whileHover={{ scale: 1.02, y: -3 }}
-              className={`bg-gradient-to-br ${item.gradient} backdrop-blur-sm rounded-2xl p-5 border border-white/10 shadow-xl relative overflow-hidden`}
+              whileTap={{ scale: 0.98 }}
+              onClick={item.onClick}
+              className={`bg-gradient-to-br ${item.gradient} backdrop-blur-sm rounded-2xl p-5 border border-white/10 shadow-xl relative overflow-hidden cursor-pointer hover:from-white/10 hover:to-white/5 transition-all duration-300`}
             >
               {/* 装饰性背景 */}
               <div className="absolute top-0 right-0 w-20 h-20 bg-white/5 rounded-full -translate-y-10 translate-x-10"></div>

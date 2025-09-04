@@ -18,30 +18,108 @@ const Stories: React.FC = () => {
       icon: 'https://static.lumi.new/1b/1ba058a4264ca2c6a85e9ed940e8ad59.png',
       color: 'from-amber-400 to-orange-500',
       bgPattern: 'from-amber-50/10 to-orange-100/5',
+      subcategories: [
+        {
+          id: 'sub-1-1',
+          title: '两岁睡前故事',
+          subtitle: '适合2岁宝宝的温馨故事',
       stories: [
         { 
-          id: 'story-1-1',
-          name: '小熊的梦境花园', 
+              id: 'story-1-1-1',
+              name: '过家家', 
+              duration: '8分钟', 
+              narrator: '温柔女声',
+              audioUrl: '/audio/bedtime-stories/过家家.mp3',
+              image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop&crop=center',
+              description: '小动物们一起玩过家家的温馨故事'
+            },
+            { 
+              id: 'story-1-1-2',
+              name: '蓝帐子', 
+              duration: '10分钟', 
+              narrator: '轻柔男声',
+              audioUrl: '/audio/bedtime-stories/蓝帐子.mp3',
+              image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop&crop=center',
+              description: '蓝色小帐篷里的奇妙冒险'
+            },
+            { 
+              id: 'story-1-1-3',
+              name: '矮婆婆的树皮小屋', 
           duration: '12分钟', 
-          narrator: '温柔女声',
-          image: 'https://images.pexels.com/photos/36729/anemone-blossom-bloom-pink.jpg?auto=compress&cs=tinysrgb&w=400',
-          description: '跟随小熊在梦境中种下希望的花朵'
+              narrator: '慈祥女声',
+              audioUrl: '/audio/bedtime-stories/矮婆婆的树皮小屋.mp3',
+              image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop&crop=center',
+              description: '住在树皮小屋里的矮婆婆的温暖故事'
+            }
+          ]
         },
-        { 
-          id: 'story-1-2',
-          name: '月亮的摇篮曲', 
+        {
+          id: 'sub-1-2',
+          title: '爸爸讲睡前故事',
+          subtitle: '爸爸的温暖声音陪伴入眠',
+          stories: [
+            { 
+              id: 'story-1-2-1',
+              name: '上夜班的动物', 
           duration: '15分钟', 
-          narrator: '轻柔男声',
-          image: 'https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg?auto=compress&cs=tinysrgb&w=400',
-          description: '月亮为所有小动物唱起温柔的摇篮曲'
+              narrator: '低沉男声',
+              audioUrl: '/audio/bedtime-stories/上夜班的动物.mp3',
+              image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop&crop=center',
+              description: '夜晚工作的动物们的奇妙故事'
+            },
+            { 
+              id: 'story-1-2-2',
+              name: '侦探和小狗', 
+              duration: '18分钟', 
+              narrator: '磁性男声',
+              audioUrl: '/audio/bedtime-stories/侦探和小狗.mp3',
+              image: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=300&fit=crop&crop=center',
+              description: '聪明的小侦探和他的忠实伙伴'
+            },
+            { 
+              id: 'story-1-2-3',
+              name: '雪夜疑案', 
+              duration: '20分钟', 
+              narrator: '神秘男声',
+              audioUrl: '/audio/bedtime-stories/雪夜疑案.mp3',
+              image: 'https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=400&h=300&fit=crop&crop=center',
+              description: '雪夜中发生的悬疑故事'
+            }
+          ]
         },
-        { 
-          id: 'story-1-3',
-          name: '星星的愿望', 
-          duration: '10分钟', 
-          narrator: '童声朗读',
-          image: 'https://images.pexels.com/photos/1252814/pexels-photo-1252814.jpeg?auto=compress&cs=tinysrgb&w=400',
-          description: '一颗小星星实现愿望的温暖故事'
+        {
+          id: 'sub-1-3',
+          title: '妈妈讲睡前故事',
+          subtitle: '妈妈的温柔声音带来甜美梦境',
+          stories: [
+            { 
+              id: 'story-1-3-1',
+              name: '小老鼠和小小萝卜头', 
+              duration: '9分钟', 
+              narrator: '温柔女声',
+              audioUrl: '/audio/bedtime-stories/小老鼠和小小萝卜头.mp3',
+              image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400&h=300&fit=crop&crop=center',
+              description: '小老鼠和萝卜头的友谊故事'
+            },
+            { 
+              id: 'story-1-3-2',
+              name: '太阳鸟', 
+              duration: '11分钟', 
+              narrator: '甜美女声',
+              audioUrl: '/audio/bedtime-stories/太阳鸟.mp3',
+              image: 'https://images.unsplash.com/photo-1444464666168-49d633b86797?w=400&h=300&fit=crop&crop=center',
+              description: '会发光的太阳鸟的美丽传说'
+            },
+            { 
+              id: 'story-1-3-3',
+              name: '绿色的世界', 
+              duration: '13分钟', 
+              narrator: '柔和女声',
+              audioUrl: '/audio/bedtime-stories/绿色的世界.mp3',
+              image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop&crop=center',
+              description: '充满生机的绿色世界冒险'
+            }
+          ]
         }
       ]
     },
@@ -233,8 +311,94 @@ const Stories: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* 故事列表 */}
-                  <div className="p-6 space-y-4">
+                  {/* 子分类和故事列表 */}
+                  <div className="p-6">
+                    {category.subcategories ? (
+                      <div className="space-y-6">
+                        {category.subcategories.map((subcategory) => (
+                          <div key={subcategory.id} className="space-y-4">
+                            <div className="flex items-center space-x-3 mb-4">
+                              <div className="w-2 h-2 bg-amber-300 rounded-full"></div>
+                              <h4 className="text-lavender-200 text-lg font-semibold">
+                                {subcategory.title}
+                              </h4>
+                              <span className="text-lavender-300/60 text-sm">
+                                {subcategory.subtitle}
+                              </span>
+                            </div>
+                            
+                            <div className="space-y-3">
+                              {subcategory.stories.map((story, storyIndex) => (
+                                <motion.div
+                                  key={story.name}
+                                  initial={{ opacity: 0, x: -20 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ duration: 0.5, delay: storyIndex * 0.1 }}
+                                  whileHover={{ scale: 1.02 }}
+                                  whileTap={{ scale: 0.98 }}
+                                  onClick={() => setSelectedStory(story)}
+                                  className="bg-white/5 rounded-2xl p-5 cursor-pointer hover:bg-white/10 transition-all duration-300 border border-white/10"
+                                >
+                                  <div className="flex items-center space-x-4">
+                                    <div className="relative">
+                                      <img
+                                        src={story.image}
+                                        alt={story.name}
+                                        className="w-18 h-18 rounded-xl object-cover shadow-lg"
+                                      />
+                                      <div className="absolute inset-0 bg-black/30 rounded-xl flex items-center justify-center">
+                                        <motion.div
+                                          whileHover={{ scale: 1.2 }}
+                                          className="bg-white/20 p-2 rounded-full backdrop-blur-sm"
+                                        >
+                                          <Play className="w-5 h-5 text-white" />
+                                        </motion.div>
+                                      </div>
+                                    </div>
+                                    
+                                    <div className="flex-1">
+                                      <h4 className="text-white font-bold text-base mb-1">
+                                        {story.name}
+                                      </h4>
+                                      <p className="text-lavender-200/70 text-sm mb-2 leading-relaxed">
+                                        {story.description}
+                                      </p>
+                                      <div className="flex items-center space-x-4 text-lavender-200/60 text-xs">
+                                        <div className="flex items-center space-x-1">
+                                          <Clock className="w-3 h-3" />
+                                          <span>{story.duration}</span>
+                                        </div>
+                                        <div className="flex items-center space-x-1">
+                                          <Star className="w-3 h-3" />
+                                          <span>{story.narrator}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    
+                                    <motion.div
+                                      whileHover={{ scale: 1.1 }}
+                                      whileTap={{ scale: 0.9 }}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleFavorite(story, category);
+                                      }}
+                                      className={`cursor-pointer transition-colors ${
+                                        isFavorite(story.id) 
+                                          ? 'text-pink-400 hover:text-pink-300' 
+                                          : 'text-lavender-300/60 hover:text-pink-300'
+                                      }`}
+                                    >
+                                      <Heart className={`w-5 h-5 ${isFavorite(story.id) ? 'fill-current' : ''}`} />
+                                    </motion.div>
+                                  </div>
+                                </motion.div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
                     {category.stories.map((story, storyIndex) => (
                       <motion.div
                         key={story.name}
@@ -300,6 +464,8 @@ const Stories: React.FC = () => {
                         </div>
                       </motion.div>
                     ))}
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               </AuthGuard>
@@ -316,7 +482,6 @@ const Stories: React.FC = () => {
             >
             {/* 分类头部 */}
             <div className={`bg-gradient-to-r ${category.color} p-8 relative overflow-hidden`}>
-              {/* 装饰性背景元素 */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-12 -translate-x-12"></div>
               
@@ -343,8 +508,94 @@ const Stories: React.FC = () => {
               </div>
             </div>
 
-            {/* 故事列表 */}
-            <div className="p-6 space-y-4">
+              {/* 子分类和故事列表 */}
+              <div className="p-6">
+                {category.subcategories ? (
+                  <div className="space-y-6">
+                    {category.subcategories.map((subcategory) => (
+                      <div key={subcategory.id} className="space-y-4">
+                        <div className="flex items-center space-x-3 mb-4">
+                          <div className="w-2 h-2 bg-amber-300 rounded-full"></div>
+                          <h4 className="text-lavender-200 text-lg font-semibold">
+                            {subcategory.title}
+                          </h4>
+                          <span className="text-lavender-300/60 text-sm">
+                            {subcategory.subtitle}
+                          </span>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          {subcategory.stories.map((story, storyIndex) => (
+                            <motion.div
+                              key={story.name}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.5, delay: storyIndex * 0.1 }}
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              onClick={() => setSelectedStory(story)}
+                              className="bg-white/5 rounded-2xl p-5 cursor-pointer hover:bg-white/10 transition-all duration-300 border border-white/10"
+                            >
+                              <div className="flex items-center space-x-4">
+                                <div className="relative">
+                                  <img
+                                    src={story.image}
+                                    alt={story.name}
+                                    className="w-18 h-18 rounded-xl object-cover shadow-lg"
+                                  />
+                                  <div className="absolute inset-0 bg-black/30 rounded-xl flex items-center justify-center">
+                                    <motion.div
+                                      whileHover={{ scale: 1.2 }}
+                                      className="bg-white/20 p-2 rounded-full backdrop-blur-sm"
+                                    >
+                                      <Play className="w-5 h-5 text-white" />
+                                    </motion.div>
+                                  </div>
+                                </div>
+                                
+                                <div className="flex-1">
+                                  <h4 className="text-white font-bold text-base mb-1">
+                                    {story.name}
+                                  </h4>
+                                  <p className="text-lavender-200/70 text-sm mb-2 leading-relaxed">
+                                    {story.description}
+                                  </p>
+                                  <div className="flex items-center space-x-4 text-lavender-200/60 text-xs">
+                                    <div className="flex items-center space-x-1">
+                                      <Clock className="w-3 h-3" />
+                                      <span>{story.duration}</span>
+                                    </div>
+                                    <div className="flex items-center space-x-1">
+                                      <Star className="w-3 h-3" />
+                                      <span>{story.narrator}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                <motion.div
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleFavorite(story, category);
+                                  }}
+                                  className={`cursor-pointer transition-colors ${
+                                    isFavorite(story.id) 
+                                      ? 'text-pink-400 hover:text-pink-300' 
+                                      : 'text-lavender-300/60 hover:text-pink-300'
+                                  }`}
+                                >
+                                  <Heart className={`w-5 h-5 ${isFavorite(story.id) ? 'fill-current' : ''}`} />
+                                </motion.div>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-4">
               {category.stories.map((story, storyIndex) => (
                 <motion.div
                   key={story.name}
@@ -410,6 +661,8 @@ const Stories: React.FC = () => {
                   </div>
                 </motion.div>
               ))}
+                  </div>
+                )}
             </div>
             </motion.div>
           );
@@ -446,16 +699,36 @@ const Stories: React.FC = () => {
               <p className="text-lavender-200/80 mb-4 leading-relaxed">
                 {selectedStory.description}
               </p>
-              <div className="flex justify-center space-x-4 text-lavender-200/70 text-sm mb-6">
-                <span>{selectedStory.duration}</span>
-                <span>•</span>
-                <span>{selectedStory.narrator}</span>
+              
+              {/* 音频播放器 */}
+              {selectedStory.audioUrl && (
+                <div className="mb-6">
+                  <audio 
+                    controls 
+                    className="w-full rounded-lg"
+                    style={{ 
+                      background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)',
+                      border: '1px solid rgba(168, 132, 255, 0.3)'
+                    }}
+                  >
+                    <source src={selectedStory.audioUrl} type="audio/mpeg" />
+                    您的浏览器不支持音频播放。
+                  </audio>
               </div>
+              )}
               
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-3 rounded-2xl font-bold mb-4 shadow-lg"
+                onClick={() => {
+                  if (selectedStory.audioUrl) {
+                    const audio = document.querySelector('audio');
+                    if (audio) {
+                      audio.play();
+                    }
+                  }
+                }}
               >
                 开始聆听
               </motion.button>
